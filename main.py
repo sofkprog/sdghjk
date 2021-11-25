@@ -9,7 +9,7 @@ class Example(QMainWindow):
     def __init__(self):
         super(Example, self).__init__()
         self.initUI()
-        self.flag = False
+        self.f = False
 
     def initUI(self):
         uic.loadUi('qwer.ui',
@@ -18,7 +18,7 @@ class Example(QMainWindow):
         self.show()
 
     def onClicked(self):
-        self.flag = True
+        self.f = True
         self.update()
 
     def paintEvent(self, e):
