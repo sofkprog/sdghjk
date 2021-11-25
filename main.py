@@ -2,32 +2,36 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPainter, QColor, QBrush
 import sys
 import random
-from PyQt5 import uic
 
 
-class Example(QMainWindow):
+class Example(QWidget):
     def __init__(self):
         super(Example, self).__init__()
         self.initUI()
-        self.f = False
+        self.flag = False
 
     def initUI(self):
-        uic.loadUi('qwer.ui',
-                   self)
-        self.pushButton.clicked.connect(self.onClicked)
+        self.setGeometry(300, 300, 500, 500)
+        self.setWindowTitle('Супрематизм')
+        self.btn = QPushButton("Кнопка", self)
+        self.btn.move(400, 400)
+        self.btn.clicked.connect(self.onClicked)
         self.show()
 
     def onClicked(self):
-        self.f = True
+        self.flag = True
         self.update()
 
     def paintEvent(self, e):
-        if self.f:
-            a = random.randint(10, 200)
+        if self.flag:
+            a = random.randint(10, 500)
+            r = random.randint(0, 255)
+            g = random.randint(0, 255)
+            b = random.randint(0, 255)
             qp = QPainter()
             qp.begin(self)
-            qp.setBrush(QColor(255, 255, 0))
-            qp.drawEllipse(50, 50, a, a)
+            qp.setBrush(QColor(r, g, b))
+            qp.drawEllipse(10, 10, a, a)
             qp.end()
 
 
