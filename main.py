@@ -22,7 +22,7 @@ class Example(QMainWindow):
         self.update()
 
     def paintEvent(self, e):
-        if self.flag:
+        if self.f:
             a = random.randint(10, 200)
             qp = QPainter()
             qp.begin(self)
