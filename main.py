@@ -1,45 +1,37 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QPainter, QColor, QBrush
 import sys
-import sqlite3
-
+import random
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtGui import *
 
 
-class MyWidget(QMainWindow):
+class Example(QMainWindow):
     def __init__(self):
-        super().__init__()
-        uic.loadUi('q.ui', self)
-        self.connection = sqlite3.connect("coffee.db")
-        self.pushButton.clicked.connect(self.pain)
+        super(Example, self).__init__()
+        self.initUI()
+        self.flag = False
 
-    def pain(self):
-        title1 = self.connection.cursor().execute(f"""SELECT id FROM Shows
-                WHERE title = '{self.sender().text()}'""").fetchall()
-        title2 = self.connection.cursor().execute(f"""SELECT title FROM Shows
-                        WHERE title = '{self.sender().text()}'""").fetchall()
-        state = self.connection.cursor().execute(f"""SELECT [степень обжарки] FROM Shows
-                        WHERE title = '{self.sender().text()}'""").fetchall()
-        seria = self.connection.cursor().execute(f"""SELECT [молотый/в зернах] FROM Shows
-                        WHERE title = '{self.sender().text()}'""").fetchall()
-        nomer = self.connection.cursor().execute(f"""SELECT [описание вкуса] FROM Shows
-                        WHERE title = '{self.sender().text()}'""").fetchall()
-        massa = self.connection.cursor().execute(f"""SELECT цена FROM Shows
-                        WHERE title = '{self.sender().text()}'""").fetchall()
-        level = self.connection.cursor().execute(f"""SELECT [объем упаковки] FROM Shows
-                        WHERE title = '{self.sender().text()}'""").fetchall()
-        self.label_8.setText(*title1[0])
-        self.label_9.setText(*title2[0])
-        self.label_10.setText(*state[0])
-        self.label_11.setText(*seria[0])
-        self.label_12.setText(str(*nomer[0]))
-        self.label_13.setText(str(*massa[0]))
-        self.label_14.setText(*level[0])
+    def initUI(self):
+        uic.loadUi('qwer.ui',
+                   self)
+        self.pushButton.clicked.connect(self.onClicked)
+        self.show()
+
+    def onClicked(self):
+        self.flag = True
+        self.update()
+
+    def paintEvent(self, e):
+        if self.flag:
+            a = random.randint(10, 200)
+            qp = QPainter()
+            qp.begin(self)
+            qp.setBrush(QColor(255, 255, 0))
+            qp.drawEllipse(50, 50, a, a)
+            qp.end()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MyWidget()
-    ex.show()
+    ex = Example()
     sys.exit(app.exec_())
